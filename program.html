@@ -35,6 +35,11 @@ nanonautImage.src = 'animatedNanonaut.png';
 var backgroundImage = new Image();
 backgroundImage.src = 'background.png';
 
+var bush1Image = new Image();
+bush1Image.src = 'bush1.png';
+
+var bushXCoordinates = [550,750,1000,1200];
+
 var cameraX = 0;
 var cameraY = 0;
 
@@ -122,6 +127,11 @@ function draw() {
     var backgroundX = -(cameraX % BACKGROUND_WIDTH);
     c.drawImage(backgroundImage, backgroundX, -210);
     c.drawImage(backgroundImage, backgroundX + BACKGROUND_WIDTH, -210);
+
+    // Draw Bush1
+    for (var i = 0; i < bushXCoordinates.length; i++) {
+         c.drawImage(bush1Image, bushXCoordinates[i] - cameraX, GROUND_Y - 100 - cameraY);
+    }
 
     // Draw the ground
     c.fillStyle = 'ForestGreen';

@@ -60,11 +60,15 @@ function onKeyDown(event) {
     if (event.keyCode === SPACE_KEYCODE) {
         spaceKeyIsPressed = true;
     }
+    console.log("DownKey: " + event.keyCode);
+    console.log("Spacekey is Pressed: " + spaceKeyIsPressed);
 }
 function onKeyUp(event) {
-    if (event.keycode === SPACE_KEYCODE) {
+    if (event.keyCode === SPACE_KEYCODE) {
         spaceKeyIsPressed = false;
     }
+    console.log("UpKey: " + event.keyCode);
+    console.log("Spacekey is Pressed: " + spaceKeyIsPressed);
 }
 
 // UPDATING

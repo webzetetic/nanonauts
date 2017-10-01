@@ -41,15 +41,7 @@ bush1Image.src = 'bush1.png';
 var bush2Image = new Image();
 bush2Image.src = 'bush2.png';
 
-var bushData = [{
-    x: 550,
-    y: 100,
-    image: bush1Image
-}, {
-    x: 750,
-    y: 90,
-    image: bush2Image
-}]
+var bushData = generateBushes();
 
 var cameraX = 0;
 var cameraY = 0;
@@ -71,6 +63,20 @@ window.addEventListener('load', start);
 
 function start() {
     window.requestAnimationFrame(mainLoop);
+}
+
+function generateBushes() {
+    var generatedBushData = [];
+    var bushX = 0;
+    for (var i=0; i<10; i++) {
+    generatedBushData.push({
+        x: bushX,
+        y: 80 + Math.random() * 20,
+        image: bush1Image
+    });
+    bushX += 150 + Math.random() * 200;
+    }
+    return generatedBushData;
 }
 
 // MAIN LOOP
@@ -127,7 +133,7 @@ function update() {
     cameraX = nanonautX - 150;
 
     // Update Bushes
-    for (var i = 0; i < bushData.length; i++) {
+    for (var i=0; i<bushData.length; i++) {
         if ((bushData[i].x - cameraX) < -CANVAS_WIDTH) {
             bushData[i].x += (2 * CANVAS_WIDTH) + 150;
         }
@@ -146,14 +152,14 @@ function draw() {
     c.drawImage(backgroundImage, backgroundX, -210);
     c.drawImage(backgroundImage, backgroundX + BACKGROUND_WIDTH, -210);
 
-    // Draw the Bushes
-    for (var i = 0; i < bushData.length; i++) {
-         c.drawImage(bushData[i].image, bushData[i].x - cameraX, GROUND_Y - bushData[i].y - cameraY);
-    }
-
     // Draw the ground
     c.fillStyle = 'ForestGreen';
     c.fillRect(0, GROUND_Y - 40, CANVAS_WIDTH, CANVAS_HEIGHT - GROUND_Y + 40);
+
+    // Draw the Bushes
+    for (var i=0; i<bushData.length; i++) {
+         c.drawImage(bushData[i].image, bushData[i].x - cameraX, GROUND_Y - bushData[i].y - cameraY);
+    }
 
     // Draw the Nanonaut
     var nanonautSpriteSheetRow = Math.floor(nanonautFrameNr / NANONAUT_NR_FRAMES_PER_ROW);

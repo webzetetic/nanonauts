@@ -19,6 +19,7 @@ var NANONAUT_X_SPEED = 5;
 var BACKGROUND_WIDTH = 1000;
 var NANONAUT_NR_FRAMES_PER_ROW = 5;
 var NANONAUT_NR_ANIMATION_FRAMES = 7;
+var NANONAUT_ANIMATION_SPEED = 5;
 
 // SETUP
 
@@ -36,6 +37,8 @@ backgroundImage.src = 'background.png';
 
 var cameraX = 0;
 var cameraY = 0;
+
+var gameFrameCounter = 0;
 
 var nanonautX = CANVAS_WIDTH / 2;
 var nanonautY = GROUND_Y - NANONAUT_HEIGHT;
@@ -79,6 +82,7 @@ function onKeyUp(event) {
 
 function update() {
     // Update Nanonaut
+    gameFrameCounter = gameFrameCounter + 1;
     nanonautX = nanonautX + NANONAUT_X_SPEED;
 
     if (spaceKeyIsPressed && !nanonautIsInTheAir) {
@@ -96,9 +100,11 @@ function update() {
     }
 
     // Update Animation
-    nanonautFrameNr = nanonautFrameNr + 1;
-    if (nanonautFrameNr >= NANONAUT_NR_ANIMATION_FRAMES) {
-        nanonautFrameNr = 0;
+    if ((gameFrameCounter % NANONAUT_ANIMATION_SPEED) === 0) {
+        nanonautFrameNr = nanonautFrameNr + 1;
+        if (nanonautFrameNr >= NANONAUT_NR_ANIMATION_FRAMES) {
+            nanonautFrameNr = 0;
+            }
     }
     
     // Update Camera

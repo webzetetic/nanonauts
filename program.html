@@ -38,7 +38,18 @@ backgroundImage.src = 'background.png';
 var bush1Image = new Image();
 bush1Image.src = 'bush1.png';
 
-var bushXCoordinates = [550,750,1000,1200];
+var bush2Image = new Image();
+bush2Image.src = 'bush2.png';
+
+var bushData = [{
+    x: 550,
+    y: 100,
+    image: bush1Image
+}, {
+    x: 750,
+    y: 90,
+    image: bush2Image
+}]
 
 var cameraX = 0;
 var cameraY = 0;
@@ -114,6 +125,13 @@ function update() {
     
     // Update Camera
     cameraX = nanonautX - 150;
+
+    // Update Bushes
+    for (var i = 0; i < bushData.length; i++) {
+        if ((bushData[i].x - cameraX) < -CANVAS_WIDTH) {
+            bushData[i].x += (2 * CANVAS_WIDTH) + 150;
+        }
+    }
 }
 
 // DRAWING
@@ -128,9 +146,9 @@ function draw() {
     c.drawImage(backgroundImage, backgroundX, -210);
     c.drawImage(backgroundImage, backgroundX + BACKGROUND_WIDTH, -210);
 
-    // Draw Bush1
-    for (var i = 0; i < bushXCoordinates.length; i++) {
-         c.drawImage(bush1Image, bushXCoordinates[i] - cameraX, GROUND_Y - 100 - cameraY);
+    // Draw the Bushes
+    for (var i = 0; i < bushData.length; i++) {
+         c.drawImage(bushData[i].image, bushData[i].x - cameraX, GROUND_Y - bushData[i].y - cameraY);
     }
 
     // Draw the ground
